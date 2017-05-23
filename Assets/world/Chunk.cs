@@ -40,7 +40,7 @@ public class Chunk : MonoBehaviour {
 
 	private void create(){
 
-		float incr = size / (float) resolution;
+		float incr = getIncrease ();
 
 		this.vertices = new Vector3[(resolution + 1) * 3];
 		this.uvs = new Vector2[(resolution + 1) * 3];
@@ -152,6 +152,14 @@ public class Chunk : MonoBehaviour {
 		obj.transform.position = p;
 		obj.transform.parent = this.transform;
 		return obj;
+	}
+
+	public int getResolution(){
+		return resolution;
+	}
+
+	public float getIncrease(){
+		return (size / (float) resolution);
 	}
 
 }

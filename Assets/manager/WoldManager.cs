@@ -17,8 +17,10 @@ public class WoldManager : MonoBehaviour {
 	private int left;
 	private int right;
 
-	void Start(){
+	private CoinManager coins;
 
+	void Start(){
+		this.coins = GetComponent<CoinManager> ();
 		this.player = GameObject.FindGameObjectWithTag ("Player").transform;
 
 		this.chunks = new List<Chunk> ();
@@ -32,7 +34,7 @@ public class WoldManager : MonoBehaviour {
 			Chunk obj = Instantiate (prefab) as Chunk;
 			obj.transform.parent = this.transform;
 			obj.transform.position = new Vector3 ( i * Chunk.size, 0, 0);
-			obj.reset (this.right++);
+			this.reset (obj, this.right++);
 			this.chunks.Add (obj);
 		}
 
@@ -42,15 +44,20 @@ public class WoldManager : MonoBehaviour {
 		foreach(Chunk c in this.chunks){
 			float dst = calculate (c);
 			if(dst > Chunk.size * (size / 2)){
-				c.reset (this.right);
+				this.reset (c, this.right);
 				this.right++;
 				this.left++;
 			}else if(dst < -Chunk.size * (size / 2)){
 				this.left--;
 				this.right--;
-				c.reset (this.left);
+				this.reset (c, this.left);
 			}
 		}
+	}
+
+	private void reset(Chunk c, int x){
+		c.reset (x);
+		this.coins.newChunk (c);
 	}
 
 	private float calculate(Chunk c){
