@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof (MeshFilter), typeof (MeshRenderer), typeof(MeshCollider))]
+[RequireComponent (typeof (MeshFilter), typeof (MeshRenderer))]
+[RequireComponent (typeof (EdgeCollider2D))]
 public class Chunk : MonoBehaviour {
-
 
 	const float seed = 0f;
 	const float depth = 6f;
@@ -22,9 +22,12 @@ public class Chunk : MonoBehaviour {
 	private Vector2[] uvs;
 	private int[] triangles;
 
+	private EdgeCollider2D edge;
+
 	private int x;
 
 	void Awake () {
+		this.edge = GetComponent<EdgeCollider2D> ();
 		reset (0);
 	}
 
@@ -32,10 +35,10 @@ public class Chunk : MonoBehaviour {
 		this.x = x;
 		this.transform.position = new Vector3 (x* size, 0, 0);
 		this.name = "Chunk: " + this.x;
-		cub ();
+		create ();
 	}
 
-	private void cub(){
+	private void create(){
 
 		float incr = size / (float) resolution;
 
@@ -45,7 +48,8 @@ public class Chunk : MonoBehaviour {
 
 		int v = 0;
 		for(int i = 0; i <= resolution; i++){
-			float h = Mathf.PerlinNoise (x + (i * incr / size) + seed, (.5f) + seed);
+			
+			float h = Mathf.PerlinNoise (this.x + 1 + (i * incr / size) + seed, (.5f) + seed);
 
 			Vector3 a = new Vector3 (i * incr,  h * amplitude , depth);
 			Vector3 b = new Vector3 (i * incr,  h * amplitude , 0);
@@ -89,6 +93,17 @@ public class Chunk : MonoBehaviour {
 
 			v += 3;
 		}
+		v = 0;
+		Vector2[] edges = new Vector2[resolution + 1];
+		for(int i = 0; i <= resolution; i++){
+			Vector3 ve = this.vertices [v + 1];
+			float x = ve.x;
+			float y = ve.y;
+			Vector2 tmp = new Vector2 (x, y);
+			edges [i] = tmp;
+			v += 3;
+		}
+		this.edge.points = edges;
 
 		Mesh mesh = new Mesh();
 		mesh.vertices  = this.vertices;
@@ -101,7 +116,7 @@ public class Chunk : MonoBehaviour {
 
 		GetComponent<Renderer> ().material.mainTexture = createTexture ();
 
-		GetComponent<MeshCollider> ().sharedMesh = mesh;
+		//GetComponent<MeshCollider> ().sharedMesh = mesh;
 
 	}
 
