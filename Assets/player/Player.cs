@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+	public UnityEngine.UI.Text text;
+
+	private int score;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -15,7 +19,11 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		Destroy (other.gameObject);
+		if(other.gameObject.tag == "Coin"){
+			this.score += other.GetComponent<Coin> ().getValue ();
+			this.text.text = "Score: " + this.score;
+			Destroy (other.gameObject);
+		}
 	}
 
 }

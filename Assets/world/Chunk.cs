@@ -6,7 +6,6 @@ using UnityEngine;
 [RequireComponent (typeof (EdgeCollider2D))]
 public class Chunk : MonoBehaviour {
 
-	const float seed = 0f;
 	const float depth = 6f;
 	const float heightOffset = 10f;
 
@@ -42,6 +41,8 @@ public class Chunk : MonoBehaviour {
 
 		float incr = getIncrease ();
 
+		int SEED = WoldManager.SEED;
+
 		this.vertices = new Vector3[(resolution + 1) * 3];
 		this.uvs = new Vector2[(resolution + 1) * 3];
 		this.triangles = new int[((resolution) * 12)];
@@ -49,7 +50,7 @@ public class Chunk : MonoBehaviour {
 		int v = 0;
 		for(int i = 0; i <= resolution; i++){
 			
-			float h = Mathf.PerlinNoise (this.x + 1 + (i * incr / size) + seed, (.5f) + seed);
+			float h = Mathf.PerlinNoise (this.x + 1 + (i * incr / size) + SEED, (.5f) + SEED);
 
 			Vector3 a = new Vector3 (i * incr,  h * amplitude , depth);
 			Vector3 b = new Vector3 (i * incr,  h * amplitude , 0);
@@ -64,10 +65,6 @@ public class Chunk : MonoBehaviour {
 			this.uvs[v + 2] = new Vector2(i / (float) resolution, 1f);
 
 			v += 3;
-
-			//ins (a);
-			//ins (b);
-			//ins (c);
 
 		}
 
@@ -110,13 +107,11 @@ public class Chunk : MonoBehaviour {
 		mesh.uv = this.uvs;
 		mesh.triangles = this.triangles;
 
-		mesh.RecalculateNormals ();
+		mesh.normals = calculateNormals ();
 
 		GetComponent<MeshFilter> ().mesh = mesh;
 
 		GetComponent<Renderer> ().material.mainTexture = createTexture ();
-
-		//GetComponent<MeshCollider> ().sharedMesh = mesh;
 
 	}
 
@@ -160,6 +155,42 @@ public class Chunk : MonoBehaviour {
 
 	public float getIncrease(){
 		return (size / (float) resolution);
+	}
+
+	private Vector3[] calculateNormals(){
+		Vector3[] normals = new Vector3[vertices.Length];
+		int trianglesCount = triangles.Length / 3;
+		for(int i = 0; i < trianglesCount; i++){
+			int normalTriangleIndex = i * 3;
+			int vertexIndexA = triangles [normalTriangleIndex + 0];
+			int vertexIndexB = triangles [normalTriangleIndex + 1];
+			int vertexIndexC = triangles [normalTriangleIndex + 2];
+
+			Vector3 triangleNormal = surfaceNormalFromIndices (vertexIndexA, vertexIndexB, vertexIndexC);
+			normals [vertexIndexA] += triangleNormal;
+			normals [vertexIndexB] += triangleNormal;
+			normals [vertexIndexC] += triangleNormal;
+			
+		}
+
+		for(int i = 0; i < normals.Length; i++){
+			normals [i].Normalize ();
+		}
+
+		return normals;
+
+	}
+
+	private Vector3 surfaceNormalFromIndices(int a, int b, int c){
+		Vector3 pointA = vertices [a];
+		Vector3 pointB = vertices [b];
+		Vector3 pointC = vertices [c];
+
+		Vector3 sideAB = pointB - pointA;
+		Vector3 sideAC = pointC - pointA;
+
+		return Vector3.Cross (sideAB, sideAC).normalized;
+
 	}
 
 }

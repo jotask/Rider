@@ -17,7 +17,8 @@ public class Coin : MonoBehaviour {
 	}
 
 	void Update () {
-		transform.position = p + new Vector3 (0f, Mathf.Sin(Time.time) * offset, 0f);
+		transform.position = p + new Vector3 (0f, (Mathf.Sin(Time.time)) * offset, 0f);
+		transform.localScale = new Vector3(Mathf.Cos(Time.time), 1f, 1f);
 	}
 
 	void OnValidate(){

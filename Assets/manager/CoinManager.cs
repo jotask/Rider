@@ -21,6 +21,7 @@ public class CoinManager : MonoBehaviour {
 				Vector3 p = c.transform.position + a;
 				p.y++;
 				GameObject obj = Instantiate (prefab, p, Quaternion.identity);
+				obj.transform.parent = this.transform;
 			}
 
 			v += 3;

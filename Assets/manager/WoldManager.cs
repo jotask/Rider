@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WoldManager : MonoBehaviour {
 
-	//public Coin coin;
+	public static readonly int SEED = 23;
 
 	const int size = 4;
 
