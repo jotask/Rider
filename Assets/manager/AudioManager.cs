@@ -74,16 +74,17 @@ public class AudioManager : MonoBehaviour{
         
     }
 
-    public void PlaySound(AudioClip clip, Vector3 pos)
-    {
-        if(clip != null)
-            AudioSource.PlayClipAtPoint(clip, pos, sfxVolumen * masterVolumen);
-    }
-
-    public void PlaySound(string name, Vector3 pos)
-    {
-        PlaySound(soundsLibrary.GetClipFromName(name), pos);
-    }
+//    public void PlaySound(AudioClip clip, Vector3 pos)
+//    {
+//        if(clip != null)
+//            AudioSource.PlayClipAtPoint(clip, pos, sfxVolumen * masterVolumen);
+//        
+//    }
+//
+//    public void PlaySound(string name, Vector3 pos)
+//    {
+//        PlaySound(soundsLibrary.GetClipFromName(name), pos);
+//    }
 
     public void PlayMusic(MusicLibrary.Scene name, float fade = 1f)
     {
@@ -118,7 +119,17 @@ public class AudioManager : MonoBehaviour{
 
     public void PlaySound2D(string name)
     {
-        sfxSource.PlayOneShot(soundsLibrary.GetClipFromName(name), sfxVolumen * masterVolumen);
+        
+        Debug.Log("sound: " + sfxVolumen * masterVolumen);
+
+        AudioClip clip = soundsLibrary.GetClipFromName(name);
+
+        if (clip == null)
+        {
+            Debug.Log(name  + " - null");
+        }
+
+        sfxSource.PlayOneShot(clip, sfxVolumen * masterVolumen);
     }
 
 }

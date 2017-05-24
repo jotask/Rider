@@ -13,8 +13,6 @@ public class Player : MonoBehaviour {
 		this.score = 0;
 	}
 
-	
-
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.gameObject.tag == "Coin"){
 			AudioManager.instance.PlaySound2D("coin");
