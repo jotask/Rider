@@ -17,6 +17,8 @@ public class Menu : MonoBehaviour
 		volumen[0].value = AudioManager.instance.masterVolumen;
 		volumen[1].value = AudioManager.instance.musicVolumen;
 		volumen[2].value = AudioManager.instance.sfxVolumen;
+		
+		AudioManager.instance.PlayMusic(MusicLibrary.Scene.MENU);
 	}
 
 	public void Play() 

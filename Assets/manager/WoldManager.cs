@@ -20,6 +20,9 @@ public class WoldManager : MonoBehaviour {
 	private CoinManager coins;
 
 	void Start(){
+
+		AudioManager.instance.PlayMusic(MusicLibrary.Scene.PLAY);
+		
 		this.coins = GetComponent<CoinManager> ();
 		this.player = GameObject.FindGameObjectWithTag ("Player").transform;
 

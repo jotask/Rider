@@ -20,6 +20,7 @@ public class Player : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.gameObject.tag == "Coin"){
+			AudioManager.instance.PlaySound2D("coin");
 			this.score += other.GetComponent<Coin> ().getValue ();
 			this.text.text = "Score: " + this.score;
 			Destroy (other.gameObject);

@@ -18,12 +18,18 @@ public class Motor : MonoBehaviour {
 
 	private Rigidbody2D body;
 
+	public bool autoMotor;
+
 	void Awake(){
 		this.body = GetComponent<Rigidbody2D> ();
 	}
 
 	void Update () {
-		this.movement = -Input.GetAxisRaw ("Vertical") * this.speed;
+		if (autoMotor){
+			this.movement = -1f * this.speed;
+		} else {
+			this.movement = -Input.GetAxisRaw ("Vertical") * this.speed;
+		}
 		this.rotation = Input.GetAxisRaw ("Horizontal") * this.rotationSpeed;
 	}
 

@@ -11,25 +11,26 @@ public class AudioManager : MonoBehaviour{
 
     private AudioSource sfxSource;
     private AudioSource[] musicSource;
+    
     private int activeMusicSource;
 
     public static AudioManager instance;
 
-    private Transform audioListener;
-    private Transform player;
+    private SoundLibrary soundsLibrary;
+    private MusicLibrary musicLibrary;
 
-    private SoundLibrary library;
-
-    void Start() {
+    void Awake() {
         if (instance != null) {
             Destroy(gameObject);
         } else {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            library = GetComponent<SoundLibrary>();
+            
+            soundsLibrary = GetComponent<SoundLibrary>();
+            musicLibrary = GetComponent<MusicLibrary>();
 
-            musicSource = new AudioSource[1];
-            for (int i = 0; i < 1; i++)
+            musicSource = new AudioSource[2];
+            for (int i = 0; i < 2; i++)
             {
                 GameObject newMusicSource = new GameObject("MusicSource" + (i + 1));
                 musicSource[i] = newMusicSource.AddComponent<AudioSource>();
@@ -40,21 +41,10 @@ public class AudioManager : MonoBehaviour{
             sfxSource = newSfxSource.AddComponent<AudioSource>();
             newSfxSource.transform.parent = transform;
 
-            audioListener = FindObjectOfType<AudioListener>().transform;
-            if(FindObjectOfType<Player>() != null)
-                player = FindObjectOfType<Player>().transform;
-
             masterVolumen = PlayerPrefs.GetFloat(AudioChannel.Master.ToString(), 1f);
             sfxVolumen = PlayerPrefs.GetFloat(AudioChannel.Sfx.ToString(), 1);
             musicVolumen = PlayerPrefs.GetFloat(AudioChannel.Music.ToString(), 1f);
 
-        }
-    }
-	
-    void Update(){
-        if (player != null)
-        {
-            audioListener.position = player.position;
         }
     }
 
@@ -71,6 +61,7 @@ public class AudioManager : MonoBehaviour{
                 sfxVolumen = value;
                 break;
         }
+        
         for (int i = 0; i < musicSource.Length; i++)
         {
             musicSource[i].volume = musicVolumen * masterVolumen;
@@ -91,11 +82,20 @@ public class AudioManager : MonoBehaviour{
 
     public void PlaySound(string name, Vector3 pos)
     {
-        PlaySound(library.GetClipFromName(name), pos);
+        PlaySound(soundsLibrary.GetClipFromName(name), pos);
+    }
+
+    public void PlayMusic(MusicLibrary.Scene name, float fade = 1f)
+    {
+        PlayMusic(musicLibrary.GetMusic(name), fade);
     }
 
     public void PlayMusic(AudioClip clip, float fadeDuration = 1f)
     {
+        
+        if (clip == null)
+            return;
+        
         activeMusicSource = 1 - activeMusicSource;
         musicSource[activeMusicSource].clip = clip;
         musicSource[activeMusicSource].Play();
@@ -118,7 +118,7 @@ public class AudioManager : MonoBehaviour{
 
     public void PlaySound2D(string name)
     {
-        sfxSource.PlayOneShot(library.GetClipFromName(name), sfxVolumen * masterVolumen);
+        sfxSource.PlayOneShot(soundsLibrary.GetClipFromName(name), sfxVolumen * masterVolumen);
     }
 
 }
