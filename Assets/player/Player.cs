@@ -8,15 +8,12 @@ public class Player : MonoBehaviour {
 
 	private int score;
 
-	// Use this for initialization
-	void Start () {
-		
+	void Start	()
+	{
+		this.score = 0;
 	}
+
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.gameObject.tag == "Coin"){
