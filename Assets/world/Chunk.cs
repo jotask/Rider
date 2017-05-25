@@ -1,19 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 [RequireComponent (typeof (MeshFilter), typeof (MeshRenderer))]
 [RequireComponent (typeof (EdgeCollider2D))]
-public class Chunk : MonoBehaviour {
+public class Chunk : MonoBehaviour
+{
 
-	const float depth = 6f;
-	const float heightOffset = 10f;
+//	const float depth = 6f;
+//	const float heightOffset = 10f;
+//
+//	const float amplitude = 7f;
 
-	const float amplitude = 7f;
-
-	public const int size = 10;
-
-	const int resolution = 20;
+	public const float SIZE = 10f;
 
 	private Mesh mesh;
 
@@ -23,25 +21,25 @@ public class Chunk : MonoBehaviour {
 
 	private EdgeCollider2D edge;
 
-	private int x;
+	public int x { get; private set; }
 
 	void Awake () {
 		this.edge = GetComponent<EdgeCollider2D> ();
-		reset (0);
 	}
 
-	public void reset(int x){
+	public void reset(int x, float[] noise, float amplitude){
 		this.x = x;
-		this.transform.position = new Vector3 (x* size, 0, 0);
+		this.transform.position = new Vector3 (x * SIZE, 0, 0);
 		this.name = "Chunk: " + this.x;
-		create ();
+		//setColl(noise);
+		create(noise, amplitude);
 	}
 
-	private void create(){
+	private void create(float[] noise, float amplitude){
+		
+		int resolution = noise.Length - 1;
 
-		float incr = getIncrease ();
-
-		int SEED = WoldManager.SEED;
+		float incr = SIZE / (resolution);
 
 		this.vertices = new Vector3[(resolution + 1) * 3];
 		this.uvs = new Vector2[(resolution + 1) * 3];
@@ -50,11 +48,11 @@ public class Chunk : MonoBehaviour {
 		int v = 0;
 		for(int i = 0; i <= resolution; i++){
 			
-			float h = Mathf.PerlinNoise (this.x + 1 + (i * incr / size) + SEED, (.5f) + SEED);
+			float h = noise[i];
 
-			Vector3 a = new Vector3 (i * incr,  h * amplitude , depth);
-			Vector3 b = new Vector3 (i * incr,  h * amplitude , 0);
-			Vector3 c = new Vector3 (i * incr, -heightOffset, 0);
+			Vector3 a = new Vector3 (i * incr,  h * amplitude, 6f);
+			Vector3 b = new Vector3 (i * incr,  h * amplitude, 0);
+			Vector3 c = new Vector3 (i * incr, -10f, 0);
 
 			vertices [v + 0] = a;
 			vertices [v + 1] = b;
@@ -90,17 +88,13 @@ public class Chunk : MonoBehaviour {
 
 			v += 3;
 		}
-		v = 0;
-		Vector2[] edges = new Vector2[resolution + 1];
-		for(int i = 0; i <= resolution; i++){
-			Vector3 ve = this.vertices [v + 1];
-			float x = ve.x;
-			float y = ve.y;
-			Vector2 tmp = new Vector2 (x, y);
-			edges [i] = tmp;
-			v += 3;
+        
+		Vector2[] pos = new Vector2[noise.Length];
+		for (int i = 0; i < pos.Length; i++)
+		{
+			pos[i] = new Vector2(i * incr, noise[i] * amplitude);
 		}
-		this.edge.points = edges;
+		this.edge.points = pos;
 
 		Mesh mesh = new Mesh();
 		mesh.vertices  = this.vertices;
@@ -116,8 +110,8 @@ public class Chunk : MonoBehaviour {
 	}
 
 	private Texture2D createTexture(){
-		int widht = size;
-		int height = Mathf.Abs((int) amplitude + (int) depth + (int) heightOffset);
+		int widht = (int) SIZE;
+		int height = Mathf.Abs(10);
 
 		Color[] colors = new Color[widht * height];
 		for(int y = 0; y < height; y++){
@@ -140,21 +134,6 @@ public class Chunk : MonoBehaviour {
 		texture.SetPixels (colors);
 		texture.Apply ();
 		return texture;
-	}
-
-	private GameObject ins(Vector3 p){
-		GameObject obj = GameObject.CreatePrimitive (PrimitiveType.Sphere);
-		obj.transform.position = p;
-		obj.transform.parent = this.transform;
-		return obj;
-	}
-
-	public int getResolution(){
-		return resolution;
-	}
-
-	public float getIncrease(){
-		return (size / (float) resolution);
 	}
 
 	private Vector3[] calculateNormals(){
@@ -191,6 +170,16 @@ public class Chunk : MonoBehaviour {
 
 		return Vector3.Cross (sideAB, sideAC).normalized;
 
+	}
+
+	public void actualizar(float[] noise, float amplitude)
+	{
+		create(noise, amplitude);
+	}
+
+	public int GetResolution()
+	{
+		return this.vertices.Length / 3;
 	}
 
 }

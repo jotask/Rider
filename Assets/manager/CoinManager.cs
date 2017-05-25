@@ -12,7 +12,7 @@ public class CoinManager : MonoBehaviour {
 	public void newChunk(Chunk c){
 		Vector3[] vert = c.vertices;
 		int v = 0;
-		for(int i = 0; i < c.getResolution(); i++){
+		for(int i = 0; i < c.GetResolution(); i++){
 			Vector3 a = vert [v + 1];
 
 			float h = Mathf.PerlinNoise (a.x, a.y);
@@ -21,7 +21,7 @@ public class CoinManager : MonoBehaviour {
 				Vector3 p = c.transform.position + a;
 				p.y++;
 				GameObject obj = Instantiate (prefab, p, Quaternion.identity);
-				obj.transform.parent = this.transform;
+				obj.transform.parent = c.transform;
 			}
 
 			v += 3;

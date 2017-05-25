@@ -119,15 +119,8 @@ public class AudioManager : MonoBehaviour{
 
     public void PlaySound2D(string name)
     {
-        
-        Debug.Log("sound: " + sfxVolumen * masterVolumen);
 
         AudioClip clip = soundsLibrary.GetClipFromName(name);
-
-        if (clip == null)
-        {
-            Debug.Log(name  + " - null");
-        }
 
         sfxSource.PlayOneShot(clip, sfxVolumen * masterVolumen);
     }
