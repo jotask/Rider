@@ -45,7 +45,9 @@ public class Motor : MonoBehaviour {
 			this.back.motor = motor;
 			this.front.motor = motor;
 		}
-		//this.rotation = Input.GetAxisRaw("Horizontal") * rotationSpeed;
+
+		this.rotation = Input.GetAxisRaw("Horizontal") * rotationSpeed;
+		
 		this.body.AddTorque (-rotation * Time.fixedDeltaTime);
 
 	}

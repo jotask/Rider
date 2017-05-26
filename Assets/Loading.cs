@@ -15,7 +15,6 @@ public class Loading : MonoBehaviour
 	public Canvas canvas;
 	public Slider loading;
 
-	// Use this for initialization
 	void Awake () {
 		if (instance)
 		{
@@ -66,7 +65,9 @@ public class Loading : MonoBehaviour
 			Debug.Log(async.progress);
 			yield return null;
 		}
+		
 		canvas.enabled = false;
+		
 	}
 	
 }
