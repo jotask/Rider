@@ -14,6 +14,9 @@ public class Menu : MonoBehaviour
 
 	void Start()
 	{
+
+		this.MainMenu();
+		
 		volumen[0].value = AudioManager.instance.masterVolumen;
 		volumen[1].value = AudioManager.instance.musicVolumen;
 		volumen[2].value = AudioManager.instance.sfxVolumen;
@@ -23,7 +26,7 @@ public class Menu : MonoBehaviour
 
 	public void Play() 
 	{
-		SceneManager.LoadScene("game");
+		Loading.LoadScene(Loading.Scenes.GAME);
 	}
 
 	public void Quit()

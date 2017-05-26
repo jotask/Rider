@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -18,15 +15,12 @@ public class Hud : MonoBehaviour
 	public Slider music;
 	public Slider sfx;
 
-	// Use this for initialization
 	void Start () {
 		inGame.SetActive(true);
 		options.SetActive(false);
 		gameover.SetActive(false);
 		
-		#if UNITY_ANDROID
-			gameInput.SetActive(true);
-		#endif
+		gameInput.SetActive(true);
 
 		master.value = AudioManager.instance.masterVolumen;
 		music.value = AudioManager.instance.musicVolumen;
@@ -41,9 +35,8 @@ public class Hud : MonoBehaviour
 		options.SetActive(true);
 		gameover.SetActive(false);
 		
-		#if UNITY_ANDROID
-				gameInput.SetActive(false);
-		#endif
+		gameInput.SetActive(false);
+
 	}
 
 	public void GameOver()
@@ -53,9 +46,8 @@ public class Hud : MonoBehaviour
 		options.SetActive(false);
 		gameover.SetActive(true);
 		
-		#if UNITY_ANDROID
-				gameInput.SetActive(false);
-		#endif
+		gameInput.SetActive(false);
+		
 	}
 
 	public void continuePlaying()
@@ -64,9 +56,7 @@ public class Hud : MonoBehaviour
 		options.SetActive(false);
 		gameover.SetActive(false);
 		
-		#if UNITY_ANDROID
-				gameInput.SetActive(true);
-		#endif
+		gameInput.SetActive(true);
 		
 		Time.timeScale = 1f;
 	}
@@ -88,12 +78,12 @@ public class Hud : MonoBehaviour
 
 	public void reload()
 	{
-		SceneManager.LoadScene("game");
+		Loading.LoadScene(Loading.Scenes.GAME);
 	}
 
 	public void goToMenu()
 	{
-		SceneManager.LoadScene("menu");
+		Loading.LoadScene(Loading.Scenes.MENU);
 	}
 
 }

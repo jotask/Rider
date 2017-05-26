@@ -36,6 +36,11 @@ public class WoldManager : MonoBehaviour {
 
 	private CoinManager coins;
 
+	void Awake()
+	{
+		Time.timeScale = 1f;
+	}
+
 	void Start(){
 
 		AudioManager.instance.PlayMusic(MusicLibrary.Scene.PLAY);

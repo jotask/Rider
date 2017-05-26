@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent (typeof (Rigidbody2D))]
 public class Motor : MonoBehaviour {
-
-	//public float suspension;
 
 	public float speed = 1500;
 	public float rotationSpeed = 15f;
@@ -30,9 +26,6 @@ public class Motor : MonoBehaviour {
 		} else {
 			this.movement = -Input.GetAxisRaw ("Vertical") * this.speed;
 		}
-		#if UNITY_STANDALONE_WIN
-			this.rotation = Input.GetAxisRaw ("Horizontal") * this.rotationSpeed;
-		#endif
 	}
 
 	void FixedUpdate(){
@@ -52,30 +45,24 @@ public class Motor : MonoBehaviour {
 			this.back.motor = motor;
 			this.front.motor = motor;
 		}
-
+		//this.rotation = Input.GetAxisRaw("Horizontal") * rotationSpeed;
 		this.body.AddTorque (-rotation * Time.fixedDeltaTime);
 
 	}
 
 	public void LeftRotation()
 	{
-		#if UNITY_ANDROID
-			this.rotation = -1f * this.rotationSpeed;
-		#endif
+		this.rotation = -1f * this.rotationSpeed;
 	}
 
 	public void RightRotation()
 	{
-		#if UNITY_ANDROID
-			this.rotation = 1f * this.rotationSpeed;
-		#endif
+		this.rotation = 1f * this.rotationSpeed;
 	}
 
 	public void StopRotation()
 	{
-		#if UNITY_ANDROID
-			this.rotation = 0f;
-		#endif
+		this.rotation = 0f;
 	}
 
 }
