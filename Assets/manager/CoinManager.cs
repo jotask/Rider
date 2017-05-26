@@ -25,7 +25,9 @@ public class CoinManager : MonoBehaviour {
 			}
 
 			v += 3;
+			
 		}
+		
 	}
 
 }

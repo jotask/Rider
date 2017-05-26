@@ -30,7 +30,9 @@ public class Motor : MonoBehaviour {
 		} else {
 			this.movement = -Input.GetAxisRaw ("Vertical") * this.speed;
 		}
-		this.rotation = Input.GetAxisRaw ("Horizontal") * this.rotationSpeed;
+		#if UNITY_STANDALONE_WIN
+			this.rotation = Input.GetAxisRaw ("Horizontal") * this.rotationSpeed;
+		#endif
 	}
 
 	void FixedUpdate(){
@@ -53,6 +55,27 @@ public class Motor : MonoBehaviour {
 
 		this.body.AddTorque (-rotation * Time.fixedDeltaTime);
 
+	}
+
+	public void LeftRotation()
+	{
+		#if UNITY_ANDROID
+			this.rotation = -1f * this.rotationSpeed;
+		#endif
+	}
+
+	public void RightRotation()
+	{
+		#if UNITY_ANDROID
+			this.rotation = 1f * this.rotationSpeed;
+		#endif
+	}
+
+	public void StopRotation()
+	{
+		#if UNITY_ANDROID
+			this.rotation = 0f;
+		#endif
 	}
 
 }

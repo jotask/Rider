@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Hud : MonoBehaviour
@@ -9,6 +10,9 @@ public class Hud : MonoBehaviour
 
 	public GameObject inGame;
 	public GameObject options;
+	public GameObject gameover;
+	
+	public GameObject gameInput;
 
 	public Slider master;
 	public Slider music;
@@ -18,6 +22,11 @@ public class Hud : MonoBehaviour
 	void Start () {
 		inGame.SetActive(true);
 		options.SetActive(false);
+		gameover.SetActive(false);
+		
+		#if UNITY_ANDROID
+			gameInput.SetActive(true);
+		#endif
 
 		master.value = AudioManager.instance.masterVolumen;
 		music.value = AudioManager.instance.musicVolumen;
@@ -30,12 +39,35 @@ public class Hud : MonoBehaviour
 		Time.timeScale = 0f;
 		inGame.SetActive(false);
 		options.SetActive(true);
+		gameover.SetActive(false);
+		
+		#if UNITY_ANDROID
+				gameInput.SetActive(false);
+		#endif
+	}
+
+	public void GameOver()
+	{
+		Time.timeScale = 0f;
+		inGame.SetActive(false);
+		options.SetActive(false);
+		gameover.SetActive(true);
+		
+		#if UNITY_ANDROID
+				gameInput.SetActive(false);
+		#endif
 	}
 
 	public void continuePlaying()
 	{
 		inGame.SetActive(true);
 		options.SetActive(false);
+		gameover.SetActive(false);
+		
+		#if UNITY_ANDROID
+				gameInput.SetActive(true);
+		#endif
+		
 		Time.timeScale = 1f;
 	}
 	
@@ -52,6 +84,16 @@ public class Hud : MonoBehaviour
 	public void setSfxVolumen(float value)
 	{
 		AudioManager.instance.SetVolumen(value, AudioManager.AudioChannel.Sfx);
+	}
+
+	public void reload()
+	{
+		SceneManager.LoadScene("game");
+	}
+
+	public void goToMenu()
+	{
+		SceneManager.LoadScene("menu");
 	}
 
 }
