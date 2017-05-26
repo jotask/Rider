@@ -11,11 +11,17 @@ public class Hud : MonoBehaviour
 	
 	public GameObject gameInput;
 
+	private GameController gameController;
+
 	public Slider master;
 	public Slider music;
 	public Slider sfx;
 
-	void Start () {
+	void Start ()
+	{
+
+		gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+		
 		inGame.SetActive(true);
 		options.SetActive(false);
 		gameover.SetActive(false);
@@ -78,11 +84,13 @@ public class Hud : MonoBehaviour
 
 	public void reload()
 	{
+		gameController.Save();
 		Loading.LoadScene(Loading.Scenes.GAME);
 	}
 
 	public void goToMenu()
 	{
+		gameController.Save();
 		Loading.LoadScene(Loading.Scenes.MENU);
 	}
 
