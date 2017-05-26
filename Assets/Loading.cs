@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Loading : MonoBehaviour
 {
 
-	public enum Scenes { MENU, GAME }
+	public enum Scenes { MENU, GAME, SHOP }
 
 	private static Loading instance;
 
@@ -62,7 +62,6 @@ public class Loading : MonoBehaviour
 		while (!async.isDone)
 		{
 			loading.value = async.progress;
-			Debug.Log(async.progress);
 			yield return null;
 		}
 		

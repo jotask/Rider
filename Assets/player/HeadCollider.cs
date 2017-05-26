@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HeadCollider : MonoBehaviour
 {
@@ -14,7 +12,10 @@ public class HeadCollider : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		hud.GameOver();
+		if (other.gameObject.tag.ToLower() == "world")
+		{
+			hud.GameOver();
+		}
 	}
 	
 }
