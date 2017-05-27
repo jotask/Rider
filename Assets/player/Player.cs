@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -10,9 +11,6 @@ public class Player : MonoBehaviour
 
 	public GameObject frontWheel;
 	public GameObject backWheel;
-
-	public PhysicsMaterial2D bodyMaterial;
-	public PhysicsMaterial2D wheelMaterial;
 
 	public int player;
 
