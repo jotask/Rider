@@ -18,6 +18,8 @@ public class Motor : MonoBehaviour {
 
 	public bool autoMotor;
 
+	public float currentSpeed = 0f;
+
 	void Awake(){
 		this.body = GetComponent<Rigidbody2D> ();
 		this._player = GetComponent<Player>();
@@ -29,7 +31,11 @@ public class Motor : MonoBehaviour {
 
 	void Update () {
 		if (autoMotor){
-			this.movement = -1f * this.speed;
+			if (currentSpeed < speed)
+			{
+				currentSpeed += Time.deltaTime * 750f;
+			}
+			this.movement = -1f * currentSpeed;
 		} else {
 			this.movement = -Input.GetAxisRaw ("Vertical") * this.speed;
 		}
