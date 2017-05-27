@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemManager : MonoBehaviour {
-	
-	
+
+	public enum Items
+	{
+		COINS, FUEL
+	};
+
 	private float coinOffset = .9f;
 
 	private float fuelOffset = .5f;
@@ -14,8 +18,8 @@ public class ItemManager : MonoBehaviour {
 
 	void Start()
 	{
-		coinOffset = PlayerPrefs.GetFloat("coinPercentage", 1f);
-		fuelOffset = PlayerPrefs.GetFloat("fuelPercentage", 1f);
+		coinOffset = PlayerPrefs.GetFloat(Items.COINS.ToString().ToLower(), 1f);
+		fuelOffset = PlayerPrefs.GetFloat(Items.FUEL.ToString().ToLower(), 1f);
 	}
 
 	public void newChunk(Chunk c){

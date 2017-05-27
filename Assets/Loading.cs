@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Loading : MonoBehaviour
 {
 
-	public enum Scenes { MENU, GAME, SHOP }
+	public enum Scenes { MENU, GAME, SHOP, SELECTION }
 
 	private static Loading instance;
 

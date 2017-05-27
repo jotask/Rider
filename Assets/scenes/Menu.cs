@@ -26,7 +26,7 @@ public class Menu : MonoBehaviour
 
 	public void Play() 
 	{
-		Loading.LoadScene(Loading.Scenes.GAME);
+		Loading.LoadScene(Loading.Scenes.SELECTION);
 	}
 
 	public void Quit()
@@ -44,6 +44,11 @@ public class Menu : MonoBehaviour
 	{
 		mainMenu.SetActive(true);
 		optionsMenu.SetActive(false);
+	}
+
+	public void GoToShop()
+	{
+		Loading.LoadScene(Loading.Scenes.SHOP);
 	}
 
 	public void setMasterVolumen(float value)

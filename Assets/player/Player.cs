@@ -22,8 +22,11 @@ public class Player : MonoBehaviour
 
 	private Motor motor;
 
-	void Start()
+	void Awake()
 	{
+		
+		player = PlayerPrefs.GetInt("player", 0);
+		
 		gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
 		Players cfg = players[player];
