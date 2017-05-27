@@ -19,6 +19,8 @@ public class Motor : MonoBehaviour {
 
 	public Slider fuelSlider;
 
+	private const float fuelConsumption = .05f; // 0.05f
+
 	public float fuel = 1f;
 
 	public bool autoMotor;
@@ -37,28 +39,17 @@ public class Motor : MonoBehaviour {
 	}
 
 	void Update () {
-		if (autoMotor){
+		if (autoMotor)
+		{
 			if (currentSpeed < speed)
 			{
 				currentSpeed += Time.deltaTime * 750f;
 			}
 			this.movement = -1f * currentSpeed;
-		} else {
-			this.movement = -Input.GetAxisRaw ("Vertical") * this.speed;
 		}
-
-		this.fuel -= 0.05f * Time.deltaTime;
-		this.fuelSlider.value = this.fuel;
-		if (this.fuel < .10f)
+		else
 		{
-			this.fuelSlider.fillRect.GetComponent<Image>().color = Color.red;
-		}
-		else if (this.fuel < .5f)
-		{
-			this.fuelSlider.fillRect.GetComponent<Image>().color = Color.yellow;
-		}else
-		{
-			this.fuelSlider.fillRect.GetComponent<Image>().color = Color.green;
+			this.movement = -Input.GetAxisRaw("Vertical") * this.speed;
 		}
 
 	}
@@ -85,6 +76,19 @@ public class Motor : MonoBehaviour {
 			this.rotation = Input.GetAxisRaw("Horizontal") * rotationSpeed;
 		
 		this.body.AddTorque (-rotation * Time.fixedDeltaTime);
+		
+		AddFuel(-fuelConsumption * Time.deltaTime);
+
+		if (fuel < 0f)
+		{
+			if (currentSpeed > 0f)
+			{
+				currentSpeed -= Time.deltaTime * 1000f;
+			}
+
+			if(currentSpeed < 0f && !_player.invecible)
+				GameObject.FindGameObjectWithTag("Ui").GetComponent<Hud>().GameOver();
+		}
 
 	}
 
@@ -101,6 +105,27 @@ public class Motor : MonoBehaviour {
 	public void StopRotation()
 	{
 		this.rotation = 0f;
+	}
+
+	public void AddFuel(float value)
+	{
+		this.fuel += value;
+		if (this.fuel > 1)
+			this.fuel = 1f;
+		
+		this.fuelSlider.value = this.fuel;
+		if (this.fuel < .10f)
+		{
+			this.fuelSlider.fillRect.GetComponent<Image>().color = Color.red;
+		}
+		else if (this.fuel < .5f)
+		{
+			this.fuelSlider.fillRect.GetComponent<Image>().color = Color.yellow;
+		}else
+		{
+			this.fuelSlider.fillRect.GetComponent<Image>().color = Color.green;
+		}
+		
 	}
 
 }

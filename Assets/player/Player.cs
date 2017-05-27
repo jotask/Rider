@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -19,6 +20,8 @@ public class Player : MonoBehaviour
 	
 	private GameController gameController;
 
+	private Motor motor;
+
 	void Start()
 	{
 		gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
@@ -32,6 +35,8 @@ public class Player : MonoBehaviour
 		setWheel(cfg, backWheel);
 
 		gameObject.transform.localScale = new Vector3(cfg.scale, cfg.scale, cfg.scale);
+		
+		motor = GetComponent<Motor>();
 
 	}
 
@@ -43,11 +48,17 @@ public class Player : MonoBehaviour
 		obj.transform.localScale = Vector3.one * cfg.wheelScale;
 	}
 
-	void OnTriggerEnter2D(Collider2D other){
-		if(other.gameObject.tag == "Coin"){
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		string tag = other.gameObject.tag;
+		if(tag == "Coin"){
 			AudioManager.instance.PlaySound2D("coin");
 			gameController.AddScore(other.GetComponent<Coin> ().getValue ());
 			Destroy (other.gameObject);
+		}else if (tag == "Fuel")
+		{
+			motor.fuel += 1f;
+			Destroy(other.gameObject);
 		}
 	}
 

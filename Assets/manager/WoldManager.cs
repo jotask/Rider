@@ -35,7 +35,7 @@ public class WoldManager : MonoBehaviour {
 	private int left;
 	private int right;
 
-	private CoinManager coins;
+	private ItemManager itemManager;
 
 	void Awake()
 	{
@@ -46,7 +46,7 @@ public class WoldManager : MonoBehaviour {
 
 		AudioManager.instance.PlayMusic(MusicLibrary.Scene.PLAY);
 		
-		this.coins = GetComponent<CoinManager> ();
+		this.itemManager = GetComponent<ItemManager> ();
 		this.player = GameObject.FindGameObjectWithTag ("Player").transform;
 
 		this.chunks = new List<Chunk> ();
@@ -111,7 +111,7 @@ public class WoldManager : MonoBehaviour {
 	private void reset(Chunk c, int x){
 		float[] noise = GenerateMapData(x * resolution);
 		c.reset (x, noise, amplitude);
-		this.coins.newChunk (c);
+		this.itemManager.newChunk (c);
 	}
 
 	private void emptyChunk(Chunk c, int x)

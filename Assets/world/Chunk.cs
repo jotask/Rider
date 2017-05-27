@@ -98,8 +98,6 @@ public class Chunk : MonoBehaviour
 
 		GetComponent<MeshFilter> ().mesh = mesh;
 
-//		GetComponent<Renderer> ().material.mainTexture = createTexture ();
-		
 		GetComponent<Renderer>().material.mainTexture = texture;
 
 	}
