@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent (typeof (Rigidbody2D))]
 public class Motor : MonoBehaviour {
@@ -16,6 +17,10 @@ public class Motor : MonoBehaviour {
 
 	private Player _player;
 
+	public Slider fuelSlider;
+
+	public float fuel = 1f;
+
 	public bool autoMotor;
 
 	public float currentSpeed = 0f;
@@ -26,6 +31,8 @@ public class Motor : MonoBehaviour {
 
 		back.anchor = _player.players[_player.player].backAnchor;
 		front.anchor = _player.players[_player.player].frontAnchor;
+
+		this.fuelSlider.value = fuel;
 
 	}
 
@@ -39,6 +46,21 @@ public class Motor : MonoBehaviour {
 		} else {
 			this.movement = -Input.GetAxisRaw ("Vertical") * this.speed;
 		}
+
+		this.fuel -= 0.05f * Time.deltaTime;
+		this.fuelSlider.value = this.fuel;
+		if (this.fuel < .10f)
+		{
+			this.fuelSlider.fillRect.GetComponent<Image>().color = Color.red;
+		}
+		else if (this.fuel < .5f)
+		{
+			this.fuelSlider.fillRect.GetComponent<Image>().color = Color.yellow;
+		}else
+		{
+			this.fuelSlider.fillRect.GetComponent<Image>().color = Color.green;
+		}
+
 	}
 
 	void FixedUpdate(){
