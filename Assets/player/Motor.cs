@@ -14,10 +14,17 @@ public class Motor : MonoBehaviour {
 
 	private Rigidbody2D body;
 
+	private Player _player;
+
 	public bool autoMotor;
 
 	void Awake(){
 		this.body = GetComponent<Rigidbody2D> ();
+		this._player = GetComponent<Player>();
+
+		back.anchor = _player.players[_player.player].backAnchor;
+		front.anchor = _player.players[_player.player].frontAnchor;
+
 	}
 
 	void Update () {
@@ -46,7 +53,8 @@ public class Motor : MonoBehaviour {
 			this.front.motor = motor;
 		}
 
-		this.rotation = Input.GetAxisRaw("Horizontal") * rotationSpeed;
+		if(_player.desktop)
+			this.rotation = Input.GetAxisRaw("Horizontal") * rotationSpeed;
 		
 		this.body.AddTorque (-rotation * Time.fixedDeltaTime);
 
