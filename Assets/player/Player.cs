@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -26,6 +21,7 @@ public class Player : MonoBehaviour
 	{
 		
 		player = PlayerPrefs.GetInt("player", 0);
+		player = 1;
 		
 		gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
@@ -40,6 +36,8 @@ public class Player : MonoBehaviour
 		gameObject.transform.localScale = new Vector3(cfg.scale, cfg.scale, cfg.scale);
 		
 		motor = GetComponent<Motor>();
+		
+		CreateHead();
 
 	}
 
@@ -63,6 +61,44 @@ public class Player : MonoBehaviour
 			motor.fuel += 1f;
 			Destroy(other.gameObject);
 		}
+	}
+
+	private void CreateHead()
+	{
+		
+		Players cfg = players[player];
+		
+		GameObject obj = new GameObject("PlayerHead");
+		obj.layer = LayerMask.NameToLayer("Car");
+		obj.transform.position = this.transform.position;
+		
+		
+		Rigidbody2D body = obj.AddComponent<Rigidbody2D>();
+		body.mass = 0.0001f;
+		
+		HingeJoint2D joint = obj.AddComponent<HingeJoint2D>();
+		joint.autoConfigureConnectedAnchor = false;
+		
+		SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
+		sr.sprite = cfg.head;
+
+		joint.connectedBody = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
+		
+		joint.anchor = cfg.headAnchor;
+		joint.connectedAnchor = cfg.connectedAnchorHead;
+		
+		JointAngleLimits2D limits = new JointAngleLimits2D();
+		limits.min = -15;
+		limits.max = 15;
+		joint.limits = limits;
+
+		PolygonCollider2D poly = obj.AddComponent<PolygonCollider2D>();
+		poly.isTrigger = true;	
+		
+		obj.transform.localScale = new Vector3(cfg.scale, cfg.scale, cfg.scale);
+		
+		HeadCollider headCollider = obj.AddComponent<HeadCollider>();
+		
 	}
 
 }

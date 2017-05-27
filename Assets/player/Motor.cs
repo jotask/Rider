@@ -27,7 +27,7 @@ public class Motor : MonoBehaviour {
 
 	public float currentSpeed = 0f;
 
-	void Awake(){
+	void Start(){
 		this.body = GetComponent<Rigidbody2D> ();
 		this._player = GetComponent<Player>();
 
