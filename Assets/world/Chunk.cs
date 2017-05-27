@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 [RequireComponent (typeof (MeshFilter), typeof (MeshRenderer))]
@@ -12,6 +13,8 @@ public class Chunk : MonoBehaviour
 //	const float amplitude = 7f;
 
 	public const float SIZE = 10f;
+
+	public Texture2D texture;
 
 	private Mesh mesh;
 
@@ -31,7 +34,6 @@ public class Chunk : MonoBehaviour
 		this.x = x;
 		this.transform.position = new Vector3 (x * SIZE, 0, 0);
 		this.name = "Chunk: " + this.x;
-		//setColl(noise);
 		create(noise, amplitude);
 	}
 
@@ -41,52 +43,43 @@ public class Chunk : MonoBehaviour
 
 		float incr = SIZE / (resolution);
 
-		this.vertices = new Vector3[(resolution + 1) * 3];
-		this.uvs = new Vector2[(resolution + 1) * 3];
-		this.triangles = new int[((resolution) * 12)];
+		this.vertices = new Vector3[(resolution + 1) * 2];
+		this.uvs = new Vector2[(resolution + 1) * 2];
+		this.triangles = new int[((resolution) * 6)];
 
 		int v = 0;
 		for(int i = 0; i <= resolution; i++){
 			
 			float h = noise[i];
 
-			Vector3 a = new Vector3 (i * incr,  h * amplitude, 6f);
-			Vector3 b = new Vector3 (i * incr,  h * amplitude, 0);
-			Vector3 c = new Vector3 (i * incr, -10f, 0);
+			Vector3 a = new Vector3 (i * incr,  h * amplitude, 0);
+			Vector3 b = new Vector3 (i * incr, -10f, 0);
 
 			vertices [v + 0] = a;
 			vertices [v + 1] = b;
-			vertices [v + 2] = c;
 
-			this.uvs[v + 0] = new Vector2(i / (float) resolution, 0f);
-			this.uvs[v + 1] = new Vector2(i / (float) resolution, .05f);
-			this.uvs[v + 2] = new Vector2(i / (float) resolution, 1f);
+			this.uvs[v + 1] = new Vector2(i / (float) resolution, 0f);
+			this.uvs[v + 0] = new Vector2(i / (float) resolution, 1f);
 
-			v += 3;
+			v += 2;
 
 		}
 
 		v = 0;
 		int t = 0;
 		for (int i = 0; i < resolution; i++) {
-			this.triangles [t++] = v + 0;
-			this.triangles [t++] = v + 4;
-			this.triangles [t++] = v + 1;
 
-			this.triangles [t++] = v;
-			this.triangles [t++] = v + 3;
-			this.triangles [t++] = v + 4;
-
-			this.triangles [t++] = v + 1;
-			this.triangles [t++] = v + 5;
-			this.triangles [t++] = v + 2;
-
-			this.triangles [t++] = v + 1;
-			this.triangles [t++] = v + 4;
-			this.triangles [t++] = v + 5;
+			this.triangles[t++] = v + 3;
+			this.triangles[t++] = v + 1;
+			this.triangles[t++] = v + 0;
+			
+			this.triangles[t++] = v + 2;
+			this.triangles[t++] = v + 3;
+			this.triangles[t++] = v + 0;
 
 
-			v += 3;
+			v += 2;
+			
 		}
         
 		Vector2[] pos = new Vector2[noise.Length];
@@ -105,35 +98,10 @@ public class Chunk : MonoBehaviour
 
 		GetComponent<MeshFilter> ().mesh = mesh;
 
-		GetComponent<Renderer> ().material.mainTexture = createTexture ();
+//		GetComponent<Renderer> ().material.mainTexture = createTexture ();
+		
+		GetComponent<Renderer>().material.mainTexture = texture;
 
-	}
-
-	private Texture2D createTexture(){
-		int widht = (int) SIZE;
-		int height = Mathf.Abs(10);
-
-		Color[] colors = new Color[widht * height];
-		for(int y = 0; y < height; y++){
-			for(int x = 0; x < widht; x++){
-				Color color = Color.magenta;
-				if(y < 1){
-					color = Color.blue;
-				}else if(y < 2f){
-					color = Color.green;
-				}
-				//colors [y * widht + x] = Color.Lerp (Color.green, Color.black
-				//, Mathf.PerlinNoise(this.transform.position.x + x / (float)widht, this.transform.position.y + y / (float)height));
-				colors[y * widht + x] = color;
-			}
-		}
-
-		Texture2D texture = new Texture2D (widht, height);
-		texture.filterMode = FilterMode.Point;
-		texture.wrapMode = TextureWrapMode.Clamp;
-		texture.SetPixels (colors);
-		texture.Apply ();
-		return texture;
 	}
 
 	private Vector3[] calculateNormals(){
