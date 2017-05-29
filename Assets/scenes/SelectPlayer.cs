@@ -15,7 +15,7 @@ public class SelectPlayer : MonoBehaviour
 	void Start()
 	{
 
-		if (Shop.GetBool("boy"))
+		if (Utiles.GetBool("boy"))
 		{
 			players[0].interactable = true;
 		}
@@ -28,7 +28,7 @@ public class SelectPlayer : MonoBehaviour
 			t.colors = c;
 		}
 
-		if (Shop.GetBool("girl"))
+		if (Utiles.GetBool("girl"))
 		{
 			players[1].interactable = true;
 		}
@@ -41,7 +41,7 @@ public class SelectPlayer : MonoBehaviour
 			t.colors = c;
 		}
 
-		if (Shop.GetBool("orc"))
+		if (Utiles.GetBool("orc"))
 		{
 			players[2].interactable = true;
 		}
