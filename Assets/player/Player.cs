@@ -32,7 +32,6 @@ public class Player : MonoBehaviour
 		GetComponent<SpriteRenderer>().sprite = cfg.carBody;
 		gameObject.AddComponent<PolygonCollider2D>();
 		
-		
 		setWheel(cfg, frontWheel);
 		setWheel(cfg, backWheel);
 
