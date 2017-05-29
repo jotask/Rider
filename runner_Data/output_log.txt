@@ -2,10 +2,13 @@ Mono path[0] = 'C:/Users/Jose/Code/GitHub/SpaceShooter/runner_Data/Managed'
 Mono path[1] = 'C:/Users/Jose/Code/GitHub/SpaceShooter/runner_Data/Mono'
 Mono config path = 'C:/Users/Jose/Code/GitHub/SpaceShooter/runner_Data/Mono/etc'
 PlayerConnection initialized from C:/Users/Jose/Code/GitHub/SpaceShooter/runner_Data (debug = 0)
-PlayerConnection initialized network socket : 0.0.0.0 55185
-Multi-casting "[IP] 192.168.56.1 [Port] 55185 [Flags] 2 [Guid] 1410284444 [EditorId] 1990333310 [Version] 1048832 [Id] WindowsPlayer(Jota) [Debug] 0" to [225.0.0.222:54997]...
-Started listening to [0.0.0.0:55185]
-PlayerConnection already initialized - listening to [0.0.0.0:55185]
+PlayerConnection initialized network socket : 0.0.0.0 55503
+Multi-casting "[IP] 192.168.56.1 [Port] 55503 [Flags] 3 [Guid] 4258105102 [EditorId] 1045231969 [Version] 1048832 [Id] WindowsPlayer(Jota) [Debug] 1" to [225.0.0.222:54997]...
+Waiting for connection from host on [0.0.0.0:55503]...
+PlayerConnection accepted from [192.168.1.67] handle:0x2b4
+Started listening to [0.0.0.0:55503]
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y,address=0.0.0.0:56102
+PlayerConnection already initialized - listening to [0.0.0.0:55503]
 Player data archive not found at `C:/Users/Jose/Code/GitHub/SpaceShooter/runner_Data/data.unity3d`, using local filesystemInitialize engine version: 5.6.1f1 (2860b30f0b54)
 GfxDevice: creating device client; threaded=1
 Direct3D:
@@ -27,27 +30,55 @@ Platform assembly: C:\Users\Jose\Code\GitHub\SpaceShooter\runner_Data\Managed\Un
 Loading C:\Users\Jose\Code\GitHub\SpaceShooter\runner_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\Jose\Code\GitHub\SpaceShooter\runner_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
 Loading C:\Users\Jose\Code\GitHub\SpaceShooter\runner_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
-- Completed reload, in  0.034 seconds
+- Completed reload, in  0.029 seconds
 Platform assembly: C:\Users\Jose\Code\GitHub\SpaceShooter\runner_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Jose\Code\GitHub\SpaceShooter\runner_Data\Managed\System.dll (this message is harmless)
-desktop: 1366x768 60Hz; virtual: 2646x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
+desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 1.279112 ms
-IndexOutOfRangeException: Array index is out of range.
-  at Menu.Start () [0x00001] in C:\Users\Jose\Code\GitHub\SpaceShooter\Assets\scenes\Menu.cs:17 
- 
-(Filename: C:/Users/Jose/Code/GitHub/SpaceShooter/Assets/scenes/Menu.cs Line: 17)
+UnloadTime: 1.407836 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.336135 ms
+System memory in use before: 89.8 MB.
+System memory in use after: 89.8 MB.
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 490.
+Total: 0.464859 ms (FindLiveObjects: 0.059871 ms CreateObjectMapping: 0.025659 ms MarkObjects: 0.369920 ms  DeleteObjects: 0.008125 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.937981 ms
+System memory in use before: 90.5 MB.
+System memory in use after: 89.8 MB.
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 406.
+Total: 0.284817 ms (FindLiveObjects: 0.027369 ms CreateObjectMapping: 0.015823 ms MarkObjects: 0.227084 ms  DeleteObjects: 0.014112 ms)
 
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.304335 ms
-System memory in use before: 86.8 MB.
-System memory in use after: 86.8 MB.
+UnloadTime: 2.793434 ms
+System memory in use before: 98.7 MB.
+System memory in use after: 98.7 MB.
 
-Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 559.
-Total: 0.653027 ms (FindLiveObjects: 0.065003 ms CreateObjectMapping: 0.042337 ms MarkObjects: 0.535850 ms  DeleteObjects: 0.008980 ms)
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 653.
+Total: 0.761651 ms (FindLiveObjects: 0.059871 ms CreateObjectMapping: 0.052601 ms MarkObjects: 0.629506 ms  DeleteObjects: 0.018816 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.873696 ms
+System memory in use before: 98.2 MB.
+System memory in use after: 98.1 MB.
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 653.
+Total: 0.676120 ms (FindLiveObjects: 0.052601 ms CreateObjectMapping: 0.038916 ms MarkObjects: 0.527724 ms  DeleteObjects: 0.055594 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.765072 ms
+System memory in use before: 98.1 MB.
+System memory in use after: 98.1 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 653.
+Total: 0.716747 ms (FindLiveObjects: 0.055167 ms CreateObjectMapping: 0.037633 ms MarkObjects: 0.546969 ms  DeleteObjects: 0.075694 ms)
 
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 848 -> priority: 1 
-  Thread -> id: 25b8 -> priority: 1 
+  Thread -> id: 2d04 -> priority: 1 
+  Thread -> id: 35c8 -> priority: 1 
+Waiting for finish

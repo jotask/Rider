@@ -38,4 +38,9 @@ public class Shop : MonoBehaviour
 		Loading.LoadScene(Loading.Scenes.MENU);
 	}
 
+	private float exponential(float value)
+	{
+		return (Mathf.Pow(2, (value + 2)));
+	}
+
 }

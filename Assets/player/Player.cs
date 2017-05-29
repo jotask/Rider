@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
 	public GameObject frontWheel;
 	public GameObject backWheel;
 
-	public int player;
+	[HideInInspector]
+	public int player { get; private set; }
 
 	public bool desktop;
 	public bool invecible;
@@ -20,8 +21,9 @@ public class Player : MonoBehaviour
 	void Awake()
 	{
 		
+		gameObject.transform.localScale = Vector3.one;
+		
 		player = PlayerPrefs.GetInt("player", 0);
-		player = 1;
 		
 		gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour
 		
 		GetComponent<SpriteRenderer>().sprite = cfg.carBody;
 		gameObject.AddComponent<PolygonCollider2D>();
+		
 		
 		setWheel(cfg, frontWheel);
 		setWheel(cfg, backWheel);
@@ -43,6 +46,7 @@ public class Player : MonoBehaviour
 
 	private void setWheel(Players cfg, GameObject obj)
 	{
+		obj.transform.localScale = Vector3.one;
 		obj.GetComponent<CircleCollider2D>().radius = cfg.wheelRadious;
 		obj.GetComponent<SpriteRenderer>().sprite = cfg.wheel;
 		obj.GetComponent<SpriteRenderer>().sortingOrder = cfg.wheelRendererLayer;
@@ -75,6 +79,7 @@ public class Player : MonoBehaviour
 		
 		Rigidbody2D body = obj.AddComponent<Rigidbody2D>();
 		body.mass = 0.0001f;
+		body.bodyType = RigidbodyType2D.Dynamic;
 		
 		HingeJoint2D joint = obj.AddComponent<HingeJoint2D>();
 		joint.autoConfigureConnectedAnchor = false;
@@ -97,8 +102,16 @@ public class Player : MonoBehaviour
 		
 		obj.transform.localScale = new Vector3(cfg.scale, cfg.scale, cfg.scale);
 		
-		HeadCollider headCollider = obj.AddComponent<HeadCollider>();
+		obj.AddComponent<HeadCollider>();
 		
 	}
 
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.red;	
+		Gizmos.DrawWireSphere(backWheel.transform.position, backWheel.GetComponent<CircleCollider2D>().radius);
+
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireSphere(frontWheel.transform.position, backWheel.GetComponent<CircleCollider2D>().radius);
+	}
 }

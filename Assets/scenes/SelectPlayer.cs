@@ -1,8 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SelectPlayer : MonoBehaviour {
+public class SelectPlayer : MonoBehaviour
+{
+
+	public Toggle[] players;
+
+	void Start()
+	{
+		int player = PlayerPrefs.GetInt("player", 0);
+		players[player].isOn = true;
+		Debug.Log(player);
+	}
 
 	public void selectBoy()
 	{
