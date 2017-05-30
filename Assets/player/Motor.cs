@@ -77,7 +77,8 @@ public class Motor : MonoBehaviour {
 		
 		this.body.AddTorque (-rotation * Time.fixedDeltaTime);
 		
-		AddFuel(-fuelConsumption * Time.deltaTime);
+		if(!_player.infiniteFuel)
+			AddFuel(-fuelConsumption * Time.deltaTime);
 
 		if (fuel < 0f)
 		{

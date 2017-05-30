@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
 	public bool desktop;
 	public bool invecible;
+	public bool infiniteFuel;
 	
 	private GameController gameController;
 
@@ -40,6 +41,11 @@ public class Player : MonoBehaviour
 		motor = GetComponent<Motor>();
 		
 		CreateHead();
+		
+		Tricks tricks = gameObject.AddComponent<Tricks>();
+		
+		tricks.front = frontWheel.GetComponent<Wheel>();
+		tricks.back  = backWheel.GetComponent<Wheel>();
 
 	}
 
@@ -105,12 +111,4 @@ public class Player : MonoBehaviour
 		
 	}
 
-	private void OnDrawGizmos()
-	{
-		Gizmos.color = Color.red;	
-		Gizmos.DrawWireSphere(backWheel.transform.position, backWheel.GetComponent<CircleCollider2D>().radius);
-
-		Gizmos.color = Color.yellow;
-		Gizmos.DrawWireSphere(frontWheel.transform.position, backWheel.GetComponent<CircleCollider2D>().radius);
-	}
 }
