@@ -42,10 +42,10 @@ public class Player : MonoBehaviour
 		
 		CreateHead();
 		
-		Tricks tricks = gameObject.AddComponent<Tricks>();
-		
-		tricks.front = frontWheel.GetComponent<Wheel>();
-		tricks.back  = backWheel.GetComponent<Wheel>();
+//		Tricks tricks = gameObject.AddComponent<Tricks>();
+//		
+//		tricks.front = frontWheel.GetComponent<Wheel>();
+//		tricks.back  = backWheel.GetComponent<Wheel>();
 
 	}
 

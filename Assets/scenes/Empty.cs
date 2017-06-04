@@ -1,14 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class Empty : MonoBehaviour
 {
 
-	public Slider slider;
+	private const int version = 1;
 
-	void Start () {
+	void Awake ()
+	{
+
+		int ver = PlayerPrefs.GetInt("version", -1);
+		
+		if (ver != ver)
+		{
+			PlayerPrefs.DeleteAll();
+			Utiles.SetBool("boy", true);
+		}
+			
 		Loading.LoadScene(Loading.Scenes.MENU);
 	}
 

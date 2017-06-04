@@ -15,18 +15,7 @@ public class SelectPlayer : MonoBehaviour
 	void Start()
 	{
 
-		if (Utiles.GetBool("boy"))
-		{
-			players[0].interactable = true;
-		}
-		else
-		{
-			Toggle t = players[0];
-			t.interactable = false;
-			ColorBlock c = t.colors;
-			c.disabledColor = not;
-			t.colors = c;
-		}
+		players[0].interactable = true;
 
 		if (Utiles.GetBool("girl"))
 		{
@@ -56,7 +45,6 @@ public class SelectPlayer : MonoBehaviour
 
 		int player = PlayerPrefs.GetInt("player", 0);
 		selectToggle(players[player]);
-		Debug.Log(player);
 	}
 
 	public void selectBoy()
@@ -103,11 +91,6 @@ public class SelectPlayer : MonoBehaviour
 		c.normalColor = selected;
 		c.highlightedColor = selected;
 		t.colors = c;
-	}
-
-	void Update()
-	{
-		Debug.Log(PlayerPrefs.GetInt("player", 0));
 	}
 	
 }

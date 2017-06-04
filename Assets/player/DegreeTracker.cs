@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using UnityEditor;
-using UnityEngine;
-using Camera = UnityEngine.Camera;
+﻿using UnityEngine;
 
 public class DegreeTracker : MonoBehaviour
 {

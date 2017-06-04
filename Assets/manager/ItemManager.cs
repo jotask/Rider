@@ -7,19 +7,39 @@ public class ItemManager : MonoBehaviour {
 	public enum Items
 	{
 		COINS, FUEL
-	};
+	}
 
-	private float coinOffset = .9f;
+	private const float REDUCE = 5f;
 
-	private float fuelOffset = .5f;
+	private float coinOffset = 1f;
+
+	private float fuelOffset = 1f;
 
 	public GameObject coin;
 	public GameObject fuel;
 
-	void Start()
+	void Awake()
 	{
-		coinOffset = PlayerPrefs.GetFloat(Items.COINS.ToString().ToLower(), 1f);
-		fuelOffset = PlayerPrefs.GetFloat(Items.FUEL.ToString().ToLower(), 1f);
+		
+		int c = PlayerPrefs.GetInt(Items.COINS.ToString().ToLower(), 0);
+		int f = PlayerPrefs.GetInt(Items.FUEL.ToString().ToLower(), 0);
+
+		coinOffset = GetReducer(c);
+		fuelOffset = GetReducer(f);
+		
+	}
+
+	private float GetReducer(int level)
+	{
+		int multuplier = 0;
+		for (int i = 0; i < level; i++) {
+			if ( i % 10 == 0)
+			{
+				multuplier++;
+			}
+		}
+		float reducer = (REDUCE * multuplier) / 100f;
+		return 1f - reducer;
 	}
 
 	public void newChunk(Chunk c){
@@ -27,8 +47,12 @@ public class ItemManager : MonoBehaviour {
 
 		// Coins
 		int v = 0;
-		for (int i = 0; i < c.GetResolution(); i++)
+		for (int i = 0; i < c.GetResolution(); i+=2)
 		{
+			if (i % 5 != 0)
+			{
+				continue;
+			}
 			float range = Random.Range(0f, 1f);
 			if (range > coinOffset)
 			{
@@ -50,6 +74,7 @@ public class ItemManager : MonoBehaviour {
 				Vector3 p = c.transform.position + vert[v];
 				p.y++;
 				GameObject obj = Instantiate (fuel, p, Quaternion.identity);
+				obj.transform.localScale = new Vector3(.5f, .5f, .5f);
 				obj.transform.parent = c.transform;
 				break;
 			}
