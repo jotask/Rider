@@ -74,18 +74,6 @@ public class AudioManager : MonoBehaviour{
         
     }
 
-//    public void PlaySound(AudioClip clip, Vector3 pos)
-//    {
-//        if(clip != null)
-//            AudioSource.PlayClipAtPoint(clip, pos, sfxVolumen * masterVolumen);
-//        
-//    }
-//
-//    public void PlaySound(string name, Vector3 pos)
-//    {
-//        PlaySound(soundsLibrary.GetClipFromName(name), pos);
-//    }
-
     public void PlayMusic(MusicLibrary.Scene name, float fade = 1f)
     {
         PlayMusic(musicLibrary.GetMusic(name), fade);

@@ -10,9 +10,10 @@ public class Empty : MonoBehaviour
 
 		int ver = PlayerPrefs.GetInt("version", -1);
 		
-		if (ver != ver)
+		if (ver != version)
 		{
 			PlayerPrefs.DeleteAll();
+			PlayerPrefs.SetInt("version", version);
 			Utiles.SetBool("boy", true);
 		}
 			
