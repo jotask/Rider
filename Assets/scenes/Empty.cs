@@ -1,16 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Text.RegularExpressions;
+using UnityEngine;
 
 public class Empty : MonoBehaviour
 {
 
-	private const int version = 1;
-
 	void Awake ()
 	{
 
-		int ver = PlayerPrefs.GetInt("version", -1);
-		
+		string name = Application.version;
+		string res = Regex.Replace(name.ToLower(), @"[^a-z0-9_]+", String.Empty);
+		int version = int.Parse(res);
+
+		int ver = PlayerPrefs.GetInt("version", 0);
+	
 		if (ver != version)
+		
 		{
 			PlayerPrefs.DeleteAll();
 			PlayerPrefs.SetInt("version", version);
