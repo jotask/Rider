@@ -2,7 +2,7 @@
 
 public class Coin : MonoBehaviour {
 
-	public int value = 1;
+	public int value = 5;
 
 	[Range (0f, 1f)]
 	public float offset = .5f;

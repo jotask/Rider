@@ -13,12 +13,12 @@ public class GameController : MonoBehaviour {
 	void Start ()
 	{
 		this.score = 0;
-		current = PlayerPrefs.GetInt("Money");
+		current = PlayerPrefs.GetInt(Utiles.Prefs.MONEY.ToString().ToLower());
 		total.text = "Total: " + current;
 	}
 
 	public void AddScore(int value)
-	{
+	{		
 		this.score += value;
 		this.text.text = "Score: " + this.score;
 		this.total.text = "Total: " + (current + score);
@@ -26,8 +26,8 @@ public class GameController : MonoBehaviour {
 
 	public void Save()
 	{
-		int money = PlayerPrefs.GetInt("Money", 0);
-		PlayerPrefs.SetInt("Money", money + score);
+		int money = PlayerPrefs.GetInt(Utiles.Prefs.MONEY.ToString().ToLower(), 0);
+		PlayerPrefs.SetInt(Utiles.Prefs.MONEY.ToString().ToLower(), money + score);
 		PlayerPrefs.Save();
 	}
 

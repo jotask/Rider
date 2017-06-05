@@ -63,7 +63,8 @@ public class Player : MonoBehaviour
 		string tag = other.gameObject.tag;
 		if(tag == "Coin"){
 			AudioManager.instance.PlaySound2D("coin");
-			gameController.AddScore(other.GetComponent<Coin> ().getValue ());
+			int value = other.GetComponent<Coin>().getValue();
+			gameController.AddScore(value);
 			Destroy (other.gameObject);
 		}else if (tag == "Fuel")
 		{
